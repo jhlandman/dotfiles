@@ -5,22 +5,20 @@
 " gcc to comment in and comment out lines
 " ctrl-e to toggle nerdtree 
 " Tab and shift-tab to cycle through coq options
-" \ + t to test nearest
-" \ + l to test last
 " ctrl + o to go back from going into definition
 " send to ipython terminal ctrl-c then ctrl-c
 
 
 " These are general things
 set nocompatible            " disable compatibility to old-time vi
+set nowrap                  " don't wrap line
 set showmatch               " show matching set ignorecase              " case insensitive 
 set mouse=v                 " middle-click paste with 
 set hlsearch                " highlight search 
 set incsearch               " incremental search
 set tabstop=4               " number of columns occupied by a tab 
 set softtabstop=4           " see multiple spaces as tabstops so <BS> does the right thing
-set expandtab               " converts tabs to white space
-set shiftwidth=2            " width for autoindents
+set shiftwidth=4           " width for autoindents
 set autoindent              " indent a new line the same amount as the line just typed
 set number                  " add line numbers
 set relativenumber          " set relative line numbers
@@ -76,11 +74,11 @@ call plug#begin('~/.vim/bundle')
     " file system
     Plug 'preservim/nerdtree'
 
-    " testing
-    Plug 'vim-test/vim-test'
-
     " interactive python ->> was going to do this using slime :)
     Plug 'jpalardy/vim-slime'
+
+    " floating terminal
+    Plug 'voldikss/vim-floaterm'
 
 call plug#end()
 
@@ -128,24 +126,21 @@ nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 nnoremap <C-e> :NERDTreeToggle<CR>
+nnoremap <C-J> :bnext<CR>
+nnoremap <C-K> :bprev<CR>
+nnoremap <leader>q :enew<bar>bd #<CR>
+nnoremap <C-F> :Prettier<CR>
+nnoremap <silent> gt :FloatermNew --wintype=vsplit --position=right --name=terminal zsh<CR>
+nnoremap <silent> gp :FloatermNew --wintype=vsplit --position=right --name=terminal ipython3 --no-autoindent<CR>
+nnoremap <silent> gw :FloatermSend<CR>
+vnoremap gw :FloatermSend<CR>
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
-noremap <C-F> :Prettier<CR>
 
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>l :TestLast<CR>
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-nnoremap <leader>q :enew<bar>bd #<CR>
-
-map <C-J> :bnext<CR>
-map <C-K> :bprev<CR>
+" you did something stupid over here... figure it out :)
+nmap <silent> gd <Plug>(coc-definition)<CR>
+nmap <silent> gy <Plug>(coc-type-definition)<CR>
 nmap <silent> gb :bd<CR>
