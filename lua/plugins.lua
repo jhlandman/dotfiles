@@ -1,7 +1,6 @@
 local vim = vim
 local execute = vim.api.nvim_command
 local fn = vim.fn
--- ensure that packer is installed
 local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
     execute 'packadd packer.nvim'
@@ -18,8 +17,6 @@ return require("packer").startup(function()
 
     -- theme
     use 'morhetz/gruvbox'
-    -- want to look into coloured parens
-    --use 'junegunn/rainbow_parentheses.vim'
     use 'norcalli/nvim-colorizer.lua'
     vim.cmd('set termguicolors')
     require'colorizer'.setup()
@@ -27,9 +24,9 @@ return require("packer").startup(function()
     -- might also want matchup 'andymass/vim-matchup'
 
     -- general dev
-    use 'neovim/nvim-lspconfig'
+    use {'neoclide/coc.nvim', branch = 'release'} -- run CocInstall coc-pyright coc-json coc-<find one for bash>
+    use 'davidhalter/jedi-vim'
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    -- TODO figure out autocommenter
 
     -- fuzzy finder
     use {
@@ -38,13 +35,21 @@ return require("packer").startup(function()
     }
 
     -- comments
-    --use 'numToStr/Comment.nvim'
+    use 'preservim/nerdcommenter'
 
     -- file system
-    --use 'preservim/nerdtree'
+    use 'preservim/nerdtree'
 
     --  floating terminal
-    --use 'voldikss/vim-floaterm'
+    use 'voldikss/vim-floaterm'
 
+    -- python
+    use 'Vimjas/vim-python-pep8-indent'
+    use 'psf/black'
+    use 'fisadev/vim-isort'
+
+    -- better brackets
+    use 'jiangmiao/auto-pairs'
+    use 'p00f/nvim-ts-rainbow' -- has to be enabled in treesitter
 end)
 

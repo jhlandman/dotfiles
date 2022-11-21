@@ -19,7 +19,7 @@ vim.o.ttimeoutlen=100
 vim.o.showmatch=true
 vim.o.scrolloff=8
 vim.o.wrap=false
-vim.o.colorcolumn=100
+vim.o.colorcolumn=80
 vim.o.ttyfast=true
 vim.o.cursorline=true
 
